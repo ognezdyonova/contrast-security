@@ -1,0 +1,2124 @@
+{
+	"info": {
+		"_postman_id": "cdcc36ae-57ce-4f6f-b977-90141f2c9c45",
+		"name": "Contrast",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Application score flow",
+			"item": [
+				{
+					"name": "GET Organization Uuid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6814544f-1521-481e-9290-c3f68f57ca0a",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify Org name is Olga's Org\", function () {",
+									"    try{",
+									"        pm.expect(jsonData.organizations[0].name).to.eql(\"Olga's Org\");",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Verify response contains all properties\", function () {",
+									"    try{",
+									"        var jsonData = pm.response.json();",
+									"        jsonData.organizations.forEach(function(t){",
+									"            pm.expect(t).to.have.property(\"name\");",
+									"            pm.expect(t).to.have.property(\"timezone\");",
+									"            pm.expect(t).to.have.property(\"organization_uuid\");",
+									"            pm.expect(t).to.have.property(\"date_format\");",
+									"            pm.expect(t).to.have.property(\"time_format\");",
+									"            pm.expect(t).to.have.property(\"locale\");",
+									"            pm.expect(t).to.have.property(\"creation_time\");",
+									"            pm.expect(t).to.have.property(\"protection_enabled\");",
+									"            pm.expect(t).to.have.property(\"auto_license_protection\");",
+									"            pm.expect(t).to.have.property(\"auto_license_assessment\");",
+									"            pm.expect(t).to.have.property(\"is_superadmin\");",
+									"            pm.expect(t).to.have.property(\"server_environments\");",
+									"            pm.expect(t).to.have.property(\"harmony_enabled\");",
+									"        });",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.environment.set(\"orgUuid\", jsonData.organizations[0].organization_uuid);",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-Key",
+								"value": "{{api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/profile/organizations",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"profile",
+								"organizations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Org applications",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "aa8c8ea9-10b2-4a10-ac68-ef991afa7351",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify successfull response message\", function () {",
+									"    try{",
+									"        pm.expect(jsonData.success).to.eql(true);",
+									"        pm.expect(jsonData.messages).to.contain(\"Applications loaded successfully\");",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.environment.set(\"appId\", jsonData.applications[0].app_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-key",
+								"type": "text",
+								"value": "{{api_key}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/{{orgUuid}}/applications",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"{{orgUuid}}",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Org application score",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b8b5a1c7-a2d6-427f-8800-c070d3acba6a",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify successfull response message\", function () {",
+									"    try{",
+									"        pm.expect(jsonData.success).to.eql(true);",
+									"        pm.expect(jsonData.messages).to.contain(\"Scores loaded successfully\");",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-key",
+								"type": "text",
+								"value": "{{api_key}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/{{orgUuid}}/applications/{{appId}}/scores",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"{{orgUuid}}",
+								"applications",
+								"{{appId}}",
+								"scores"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Get All Appliction Libraries",
+			"item": [
+				{
+					"name": "GET Organization Uuid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2a10b870-2fe3-4bf2-9612-6b10866ea59f",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify Org name is Olga's Org\", function () {",
+									"    try{",
+									"        pm.expect(jsonData.organizations[0].name).to.eql(\"Olga's Org\");",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Verify response contains all properties\", function () {",
+									"    try{",
+									"        var jsonData = pm.response.json();",
+									"        jsonData.organizations.forEach(function(t){",
+									"            pm.expect(t).to.have.property(\"name\");",
+									"            pm.expect(t).to.have.property(\"timezone\");",
+									"            pm.expect(t).to.have.property(\"organization_uuid\");",
+									"            pm.expect(t).to.have.property(\"date_format\");",
+									"            pm.expect(t).to.have.property(\"time_format\");",
+									"            pm.expect(t).to.have.property(\"locale\");",
+									"            pm.expect(t).to.have.property(\"creation_time\");",
+									"            pm.expect(t).to.have.property(\"protection_enabled\");",
+									"            pm.expect(t).to.have.property(\"auto_license_protection\");",
+									"            pm.expect(t).to.have.property(\"auto_license_assessment\");",
+									"            pm.expect(t).to.have.property(\"is_superadmin\");",
+									"            pm.expect(t).to.have.property(\"server_environments\");",
+									"            pm.expect(t).to.have.property(\"harmony_enabled\");",
+									"        });",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.environment.set(\"orgUuid\", jsonData.organizations[0].organization_uuid);",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-Key",
+								"value": "{{api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/profile/organizations",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"profile",
+								"organizations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Org applications",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "780afb5d-34be-4936-a705-e727a7073a06",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify Applications loaded successfully message\", function () {",
+									"    try{",
+									"        pm.expect(jsonData.success).to.eql(true);",
+									"        pm.expect(jsonData.messages).to.contain(\"Applications loaded successfully\");",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.environment.set(\"appId\", jsonData.applications[0].app_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-key",
+								"type": "text",
+								"value": "{{api_key}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/{{orgUuid}}/applications",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"{{orgUuid}}",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Org applications libraries",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fb56d78f-b1a7-4c60-8467-884cf917897a",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify successfull response message\", function () {",
+									"    try{",
+									"        pm.expect(jsonData.success).to.eql(true);",
+									"        pm.expect(jsonData.messages).to.contain(\"Libraries loaded successfully\");",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Verify response libraries contains all properties\", function () {",
+									"    try{",
+									"        jsonData.libraries.forEach(function(t){",
+									"            pm.expect(t).to.have.property(\"hash\");",
+									"            pm.expect(t).to.have.property(\"custom\");",
+									"            pm.expect(t).to.have.property(\"grade\");",
+									"            pm.expect(t).to.have.property(\"score\");",
+									"            pm.expect(t).to.have.property(\"agePenalty\");",
+									"            pm.expect(t).to.have.property(\"versionPenalty\");",
+									"            pm.expect(t).to.have.property(\"version\");",
+									"            pm.expect(t).to.have.property(\"loc\");",
+									"            pm.expect(t).to.have.property(\"vulns\");",
+									"            pm.expect(t).to.have.property(\"tags\");",
+									"            pm.expect(t).to.have.property(\"restricted\");",
+									"            pm.expect(t).to.have.property(\"licenses\");",
+									"            pm.expect(t).to.have.property(\"ossEnabled\");",
+									"            pm.expect(t).to.have.property(\"file_name\");",
+									"            pm.expect(t).to.have.property(\"app_language\");",
+									"            pm.expect(t).to.have.property(\"group\");",
+									"            pm.expect(t).to.have.property(\"file_version\");",
+									"            pm.expect(t).to.have.property(\"latest_version\");",
+									"            pm.expect(t).to.have.property(\"release_date\");",
+									"            pm.expect(t).to.have.property(\"latest_release_date\");",
+									"            pm.expect(t).to.have.property(\"classes_used\");",
+									"            pm.expect(t).to.have.property(\"class_count\");",
+									"            pm.expect(t).to.have.property(\"loc_shorthand\");",
+									"            pm.expect(t).to.have.property(\"total_vulnerabilities\");",
+									"            pm.expect(t).to.have.property(\"months_outdated\");",
+									"            pm.expect(t).to.have.property(\"versions_behind\");",
+									"            pm.expect(t).to.have.property(\"high_vulnerabilities\");",
+									"            pm.expect(t).to.have.property(\"invalid_version\");",
+									"            pm.expect(t).to.have.property(\"bugtracker_tickets\");",
+									"        });",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-key",
+								"type": "text",
+								"value": "{{api_key}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/{{orgUuid}}/applications/{{appId}}/libraries",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"{{orgUuid}}",
+								"applications",
+								"{{appId}}",
+								"libraries"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Get All Application Vulnerabilities",
+			"item": [
+				{
+					"name": "GET Organization Uuid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "de013b0d-5fca-4e7e-9806-dc4739a53318",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"",
+									"    pm.response.to.have.status(200);",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Verify Org name is Olga's Org\", function () {",
+									"    try{",
+									"",
+									"        pm.expect(jsonData.organizations[0].name).to.eql(\"Olga's Org\");",
+									"",
+									"    }catch(e){",
+									"",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Verify response contains all properties\", function () {",
+									"    try{",
+									"        var jsonData = pm.response.json();",
+									"        jsonData.organizations.forEach(function(t){",
+									"            pm.expect(t).to.have.property(\"name\");",
+									"            pm.expect(t).to.have.property(\"timezone\");",
+									"            pm.expect(t).to.have.property(\"organization_uuid\");",
+									"            pm.expect(t).to.have.property(\"date_format\");",
+									"            pm.expect(t).to.have.property(\"time_format\");",
+									"            pm.expect(t).to.have.property(\"locale\");",
+									"            pm.expect(t).to.have.property(\"creation_time\");",
+									"            pm.expect(t).to.have.property(\"protection_enabled\");",
+									"            pm.expect(t).to.have.property(\"auto_license_protection\");",
+									"            pm.expect(t).to.have.property(\"auto_license_assessment\");",
+									"            pm.expect(t).to.have.property(\"is_superadmin\");",
+									"            pm.expect(t).to.have.property(\"server_environments\");",
+									"            pm.expect(t).to.have.property(\"harmony_enabled\");",
+									"        });",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.environment.set(\"orgUuid\", jsonData.organizations[0].organization_uuid);",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-Key",
+								"value": "{{api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/profile/organizations",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"profile",
+								"organizations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Org applications",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "111616a9-79ae-4ded-8e77-70490f03afcf",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify Applications loaded successfully message\", function () {",
+									"    try{",
+									"        pm.expect(jsonData.success).to.eql(true);",
+									"        pm.expect(jsonData.messages).to.contain(\"Applications loaded successfully\");",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.environment.set(\"appId\", jsonData.applications[0].app_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-key",
+								"type": "text",
+								"value": "{{api_key}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/{{orgUuid}}/applications",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"{{orgUuid}}",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Org application vulnerabilities",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3f0ec74b-af82-4f4a-8f86-877cab8040c4",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify Application Vulnerability Breakdown loaded successfully message\", function () {",
+									"    try{",
+									"        pm.expect(jsonData.success).to.eql(true);",
+									"        pm.expect(jsonData.messages).to.contain(\"Application Vulnerability Breakdown loaded successfully\");",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Verify response trace breakdown contains all properties\", function () {",
+									"    try{",
+									"        ",
+									"            pm.expect(jsonData.trace_breakdown).to.have.property(\"criticals\");",
+									"            pm.expect(jsonData.trace_breakdown).to.have.property(\"highs\");",
+									"            pm.expect(jsonData.trace_breakdown).to.have.property(\"meds\");",
+									"            pm.expect(jsonData.trace_breakdown).to.have.property(\"lows\");",
+									"            pm.expect(jsonData.trace_breakdown).to.have.property(\"notes\");",
+									"            pm.expect(jsonData.trace_breakdown).to.have.property(\"safes\");",
+									"            pm.expect(jsonData.trace_breakdown).to.have.property(\"triaged\");",
+									"            pm.expect(jsonData.trace_breakdown).to.have.property(\"confirmed\");",
+									"            pm.expect(jsonData.trace_breakdown).to.have.property(\"suspicious\");",
+									"            pm.expect(jsonData.trace_breakdown).to.have.property(\"notProblem\");",
+									"            pm.expect(jsonData.trace_breakdown).to.have.property(\"remediated\");",
+									"            pm.expect(jsonData.trace_breakdown).to.have.property(\"reported\");",
+									"            pm.expect(jsonData.trace_breakdown).to.have.property(\"fixed\");",
+									"            pm.expect(jsonData.trace_breakdown).to.have.property(\"remediatedAutoVerified\");",
+									"            pm.expect(jsonData.trace_breakdown).to.have.property(\"traces\");",
+									"        ",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-key",
+								"type": "text",
+								"value": "{{api_key}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/{{orgUuid}}/applications/{{appId}}/breakdown/trace",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"{{orgUuid}}",
+								"applications",
+								"{{appId}}",
+								"breakdown",
+								"trace"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Get apikey for a user",
+			"item": [
+				{
+					"name": "GET Organization Uuid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3250eb40-67cf-427f-86ee-d5d81fe2bdeb",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"",
+									"    pm.response.to.have.status(200);",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Verify Org name is Olga's Org\", function () {",
+									"    try{",
+									"",
+									"        pm.expect(jsonData.organizations[0].name).to.eql(\"Olga's Org\");",
+									"",
+									"    }catch(e){",
+									"",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Verify response contains all properties\", function () {",
+									"    try{",
+									"        var jsonData = pm.response.json();",
+									"        jsonData.organizations.forEach(function(t){",
+									"            pm.expect(t).to.have.property(\"name\");",
+									"            pm.expect(t).to.have.property(\"timezone\");",
+									"            pm.expect(t).to.have.property(\"organization_uuid\");",
+									"            pm.expect(t).to.have.property(\"date_format\");",
+									"            pm.expect(t).to.have.property(\"time_format\");",
+									"            pm.expect(t).to.have.property(\"locale\");",
+									"            pm.expect(t).to.have.property(\"creation_time\");",
+									"            pm.expect(t).to.have.property(\"protection_enabled\");",
+									"            pm.expect(t).to.have.property(\"auto_license_protection\");",
+									"            pm.expect(t).to.have.property(\"auto_license_assessment\");",
+									"            pm.expect(t).to.have.property(\"is_superadmin\");",
+									"            pm.expect(t).to.have.property(\"server_environments\");",
+									"            pm.expect(t).to.have.property(\"harmony_enabled\");",
+									"        });",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.environment.set(\"orgUuid\", jsonData.organizations[0].organization_uuid);",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-Key",
+								"value": "{{api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/profile/organizations",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"profile",
+								"organizations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Org users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0818052c-933d-425d-a924-11ba6893fccd",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify Users loaded successfully message\", function () {",
+									"    try{",
+									"        pm.expect(jsonData.success).to.eql(true);",
+									"        pm.expect(jsonData.messages).to.contain(\"Users loaded successfully\");",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Verify User's Id, First Name, Last Name\", function () {",
+									"    try{",
+									"        pm.expect(jsonData.success).to.eql(true);",
+									"        pm.expect(jsonData.users[0].user_uid).to.eql(\"ognezdyonova@healthrecoverysolutions.com\");",
+									"        pm.expect(jsonData.users[0].last_name).to.eql(\"Gnezdyonova\");",
+									"        pm.expect(jsonData.users[0].first_name).to.eql(\"Olga\");",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-key",
+								"value": "{{api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/{{orgUuid}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"{{orgUuid}}",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Org Api Key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "01241eab-2864-4df6-88ad-b9b7153d2a07",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify API key loaded successfully message\", function () {",
+									"    try{",
+									"        pm.expect(jsonData.success).to.eql(true);",
+									"        pm.expect(jsonData.messages).to.contain(\"API key loaded successfully\");",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Verify response contain api keey property\", function () {",
+									"    try{",
+									"        pm.expect(jsonData).to.have.property(\"api_key\");",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-key",
+								"type": "text",
+								"value": "{{api_key}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/{{orgUuid}}/organizations/apikey",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"{{orgUuid}}",
+								"organizations",
+								"apikey"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Get Application License flow",
+			"item": [
+				{
+					"name": "GET Organization Uuid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "188072f6-452d-48d2-b2a7-c70c6476c586",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"",
+									"    pm.response.to.have.status(200);",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Verify Org name is Olga's Org\", function () {",
+									"    try{",
+									"",
+									"        pm.expect(jsonData.organizations[0].name).to.eql(\"Olga's Org\");",
+									"",
+									"    }catch(e){",
+									"",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Verify response contains all properties\", function () {",
+									"    try{",
+									"        var jsonData = pm.response.json();",
+									"        jsonData.organizations.forEach(function(t){",
+									"            pm.expect(t).to.have.property(\"name\");",
+									"            pm.expect(t).to.have.property(\"timezone\");",
+									"            pm.expect(t).to.have.property(\"organization_uuid\");",
+									"            pm.expect(t).to.have.property(\"date_format\");",
+									"            pm.expect(t).to.have.property(\"time_format\");",
+									"            pm.expect(t).to.have.property(\"locale\");",
+									"            pm.expect(t).to.have.property(\"creation_time\");",
+									"            pm.expect(t).to.have.property(\"protection_enabled\");",
+									"            pm.expect(t).to.have.property(\"auto_license_protection\");",
+									"            pm.expect(t).to.have.property(\"auto_license_assessment\");",
+									"            pm.expect(t).to.have.property(\"is_superadmin\");",
+									"            pm.expect(t).to.have.property(\"server_environments\");",
+									"            pm.expect(t).to.have.property(\"harmony_enabled\");",
+									"        });",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.environment.set(\"orgUuid\", jsonData.organizations[0].organization_uuid);",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-Key",
+								"value": "{{api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/profile/organizations",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"profile",
+								"organizations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Org applications",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "90b7dbe2-90e7-42ce-8b57-27676507f575",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify Applications loaded successfully message\", function () {",
+									"    try{",
+									"        pm.expect(jsonData.success).to.eql(true);",
+									"        pm.expect(jsonData.messages).to.contain(\"Applications loaded successfully\");",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.environment.set(\"appId\", jsonData.applications[0].app_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-key",
+								"type": "text",
+								"value": "{{api_key}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/{{orgUuid}}/applications",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"{{orgUuid}}",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Org application license",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "75d084c4-7c98-4805-8e04-969a0c4ba06b",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify Application License loaded successfully message\", function () {",
+									"    try{",
+									"        pm.expect(jsonData.success).to.eql(true);",
+									"        pm.expect(jsonData.messages).to.contain(\"Application License loaded successfully\");",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Verify response license contains all properties\", function () {",
+									"    try{",
+									"        ",
+									"            pm.expect(jsonData.license).to.have.property(\"level\");",
+									"            pm.expect(jsonData.license).to.have.property(\"start\");",
+									"            pm.expect(jsonData.license).to.have.property(\"end\");",
+									"            pm.expect(jsonData.license).to.have.property(\"near_expiration\");",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-key",
+								"type": "text",
+								"value": "{{api_key}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/{{orgUuid}}/applications/{{appId}}/license",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"{{orgUuid}}",
+								"applications",
+								"{{appId}}",
+								"license"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Get Application Technologies",
+			"item": [
+				{
+					"name": "GET Organization Uuid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "44a4373d-d595-4517-884b-f441618e5ed1",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"",
+									"    pm.response.to.have.status(200);",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Verify Org name is Olga's Org\", function () {",
+									"    try{",
+									"",
+									"        pm.expect(jsonData.organizations[0].name).to.eql(\"Olga's Org\");",
+									"",
+									"    }catch(e){",
+									"",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Verify response contains all properties\", function () {",
+									"    try{",
+									"        var jsonData = pm.response.json();",
+									"        jsonData.organizations.forEach(function(t){",
+									"            pm.expect(t).to.have.property(\"name\");",
+									"            pm.expect(t).to.have.property(\"timezone\");",
+									"            pm.expect(t).to.have.property(\"organization_uuid\");",
+									"            pm.expect(t).to.have.property(\"date_format\");",
+									"            pm.expect(t).to.have.property(\"time_format\");",
+									"            pm.expect(t).to.have.property(\"locale\");",
+									"            pm.expect(t).to.have.property(\"creation_time\");",
+									"            pm.expect(t).to.have.property(\"protection_enabled\");",
+									"            pm.expect(t).to.have.property(\"auto_license_protection\");",
+									"            pm.expect(t).to.have.property(\"auto_license_assessment\");",
+									"            pm.expect(t).to.have.property(\"is_superadmin\");",
+									"            pm.expect(t).to.have.property(\"server_environments\");",
+									"            pm.expect(t).to.have.property(\"harmony_enabled\");",
+									"        });",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.environment.set(\"orgUuid\", jsonData.organizations[0].organization_uuid);",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-Key",
+								"value": "{{api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/profile/organizations",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"profile",
+								"organizations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Org applications",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "42c0e0d6-1acc-47c0-9a52-a4fb4f79a95a",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify Applications loaded successfully message\", function () {",
+									"    try{",
+									"        pm.expect(jsonData.success).to.eql(true);",
+									"        pm.expect(jsonData.messages).to.contain(\"Applications loaded successfully\");",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.environment.set(\"appId\", jsonData.applications[0].app_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-key",
+								"type": "text",
+								"value": "{{api_key}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/{{orgUuid}}/applications",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"{{orgUuid}}",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Org application technologies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a7012594-15b7-4c16-815a-c91d0db5299d",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify Technologies loaded successfully message\", function () {",
+									"    try{",
+									"        pm.expect(jsonData.success).to.eql(true);",
+									"        pm.expect(jsonData.messages).to.contain(\"Technologies loaded successfully\");",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-key",
+								"type": "text",
+								"value": "{{api_key}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/{{orgUuid}}/applications/{{appId}}/techs",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"{{orgUuid}}",
+								"applications",
+								"{{appId}}",
+								"techs"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Get Servers for an Application",
+			"item": [
+				{
+					"name": "GET Organization Uuid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "96f14993-bd55-457e-8190-62783352a2a9",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"",
+									"    pm.response.to.have.status(200);",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Verify Org name is Olga's Org\", function () {",
+									"    try{",
+									"",
+									"        pm.expect(jsonData.organizations[0].name).to.eql(\"Olga's Org\");",
+									"",
+									"    }catch(e){",
+									"",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Verify response contains all properties\", function () {",
+									"    try{",
+									"        var jsonData = pm.response.json();",
+									"        jsonData.organizations.forEach(function(t){",
+									"            pm.expect(t).to.have.property(\"name\");",
+									"            pm.expect(t).to.have.property(\"timezone\");",
+									"            pm.expect(t).to.have.property(\"organization_uuid\");",
+									"            pm.expect(t).to.have.property(\"date_format\");",
+									"            pm.expect(t).to.have.property(\"time_format\");",
+									"            pm.expect(t).to.have.property(\"locale\");",
+									"            pm.expect(t).to.have.property(\"creation_time\");",
+									"            pm.expect(t).to.have.property(\"protection_enabled\");",
+									"            pm.expect(t).to.have.property(\"auto_license_protection\");",
+									"            pm.expect(t).to.have.property(\"auto_license_assessment\");",
+									"            pm.expect(t).to.have.property(\"is_superadmin\");",
+									"            pm.expect(t).to.have.property(\"server_environments\");",
+									"            pm.expect(t).to.have.property(\"harmony_enabled\");",
+									"        });",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.environment.set(\"orgUuid\", jsonData.organizations[0].organization_uuid);",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-Key",
+								"value": "{{api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/profile/organizations",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"profile",
+								"organizations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET All applications",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1bd1de1d-a520-4e8b-b6de-130a3f66f704",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify Applications loaded successfully message\", function () {",
+									"    try{",
+									"        pm.expect(jsonData.success).to.eql(true);",
+									"        pm.expect(jsonData.messages).to.contain(\"Applications loaded successfully\");",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.environment.set(\"appId\", jsonData.applications[0].app_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-key",
+								"type": "text",
+								"value": "{{api_key}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/{{orgUuid}}/applications",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"{{orgUuid}}",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET servers associated to an application",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d8788657-7d24-452b-9f99-b2de78e60900",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify TApplication Servers loaded successfully message\", function () {",
+									"    try{",
+									"        pm.expect(jsonData.success).to.eql(true);",
+									"        pm.expect(jsonData.messages).to.contain(\"Application Servers loaded successfully\");",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Verify response Servers contains all properties\", function () {",
+									"    try{",
+									"        jsonData.servers.forEach(function(t){",
+									"            pm.expect(t).to.have.property(\"container\");",
+									"            pm.expect(t).to.have.property(\"environment\");",
+									"            pm.expect(t).to.have.property(\"status\");",
+									"            pm.expect(t).to.have.property(\"noPending\");",
+									"            pm.expect(t).to.have.property(\"tags\");",
+									"            pm.expect(t).to.have.property(\"logLevel\");",
+									"            pm.expect(t).to.have.property(\"logPath\");",
+									"            pm.expect(t).to.have.property(\"assess\");",
+									"            pm.expect(t).to.have.property(\"assessPending\");",
+									"            pm.expect(t).to.have.property(\"defend\");",
+									"            pm.expect(t).to.have.property(\"defendPending\");",
+									"            pm.expect(t).to.have.property(\"logEnhancerPending\");",
+									"            pm.expect(t).to.have.property(\"language\");",
+									"            pm.expect(t).to.have.property(\"server_id\");",
+									"            pm.expect(t).to.have.property(\"last_startup\");",
+									"            pm.expect(t).to.have.property(\"last_activity\");",
+									"            pm.expect(t).to.have.property(\"name\");",
+									"            pm.expect(t).to.have.property(\"hostname\");",
+									"            pm.expect(t).to.have.property(\"path\");",
+									"            pm.expect(t).to.have.property(\"type\");",
+									"            pm.expect(t).to.have.property(\"agent_version\");",
+									"            pm.expect(t).to.have.property(\"out_of_date\");",
+									"            pm.expect(t).to.have.property(\"latest_agent_version\");",
+									"            pm.expect(t).to.have.property(\"assess_sensors\");",
+									"            pm.expect(t).to.have.property(\"assess_last_update\");",
+									"            pm.expect(t).to.have.property(\"defend_sensors\");",
+									"            pm.expect(t).to.have.property(\"defense_last_update\");",
+									"            pm.expect(t).to.have.property(\"syslog_enabled\");",
+									"        });",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.environment.set(\"serverId\", jsonData.servers[0].server_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-key",
+								"type": "text",
+								"value": "{{api_key}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/{{orgUuid}}/applications/{{appId}}/servers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"{{orgUuid}}",
+								"applications",
+								"{{appId}}",
+								"servers"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Get Vulnerability Count by Server",
+			"item": [
+				{
+					"name": "GET all organizations configured for the current user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "982cec20-7357-4319-bd85-29a1efb14811",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"",
+									"    pm.response.to.have.status(200);",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Verify Org name is Olga's Org\", function () {",
+									"    try{",
+									"",
+									"        pm.expect(jsonData.organizations[0].name).to.eql(\"Olga's Org\");",
+									"",
+									"    }catch(e){",
+									"",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Verify response contains all properties\", function () {",
+									"    try{",
+									"        var jsonData = pm.response.json();",
+									"        jsonData.organizations.forEach(function(t){",
+									"            pm.expect(t).to.have.property(\"name\");",
+									"            pm.expect(t).to.have.property(\"timezone\");",
+									"            pm.expect(t).to.have.property(\"organization_uuid\");",
+									"            pm.expect(t).to.have.property(\"date_format\");",
+									"            pm.expect(t).to.have.property(\"time_format\");",
+									"            pm.expect(t).to.have.property(\"locale\");",
+									"            pm.expect(t).to.have.property(\"creation_time\");",
+									"            pm.expect(t).to.have.property(\"protection_enabled\");",
+									"            pm.expect(t).to.have.property(\"auto_license_protection\");",
+									"            pm.expect(t).to.have.property(\"auto_license_assessment\");",
+									"            pm.expect(t).to.have.property(\"is_superadmin\");",
+									"            pm.expect(t).to.have.property(\"server_environments\");",
+									"            pm.expect(t).to.have.property(\"harmony_enabled\");",
+									"        });",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.environment.set(\"orgUuid\", jsonData.organizations[0].organization_uuid);",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-Key",
+								"value": "{{api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{auth}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/profile/organizations",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"profile",
+								"organizations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET All applications",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "caf43f25-2258-4c0d-9d8c-0a2c6b024ea5",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify Applications loaded successfully message\", function () {",
+									"    try{",
+									"        pm.expect(jsonData.success).to.eql(true);",
+									"        pm.expect(jsonData.messages).to.contain(\"Applications loaded successfully\");",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.environment.set(\"appId\", jsonData.applications[0].app_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-key",
+								"type": "text",
+								"value": "{{api_key}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/{{orgUuid}}/applications",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"{{orgUuid}}",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET servers associated to an application",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "26f4c5cc-441f-4fa2-b9f8-d7cc6591fb3e",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify TApplication Servers loaded successfully message\", function () {",
+									"    try{",
+									"        pm.expect(jsonData.success).to.eql(true);",
+									"        pm.expect(jsonData.messages).to.contain(\"Application Servers loaded successfully\");",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Verify response Servers contains all properties\", function () {",
+									"    try{",
+									"        jsonData.servers.forEach(function(t){",
+									"            pm.expect(t).to.have.property(\"container\");",
+									"            pm.expect(t).to.have.property(\"environment\");",
+									"            pm.expect(t).to.have.property(\"status\");",
+									"            pm.expect(t).to.have.property(\"noPending\");",
+									"            pm.expect(t).to.have.property(\"tags\");",
+									"            pm.expect(t).to.have.property(\"logLevel\");",
+									"            pm.expect(t).to.have.property(\"logPath\");",
+									"            pm.expect(t).to.have.property(\"assess\");",
+									"            pm.expect(t).to.have.property(\"assessPending\");",
+									"            pm.expect(t).to.have.property(\"defend\");",
+									"            pm.expect(t).to.have.property(\"defendPending\");",
+									"            pm.expect(t).to.have.property(\"logEnhancerPending\");",
+									"            pm.expect(t).to.have.property(\"language\");",
+									"            pm.expect(t).to.have.property(\"server_id\");",
+									"            pm.expect(t).to.have.property(\"last_startup\");",
+									"            pm.expect(t).to.have.property(\"last_activity\");",
+									"            pm.expect(t).to.have.property(\"name\");",
+									"            pm.expect(t).to.have.property(\"hostname\");",
+									"            pm.expect(t).to.have.property(\"path\");",
+									"            pm.expect(t).to.have.property(\"type\");",
+									"            pm.expect(t).to.have.property(\"agent_version\");",
+									"            pm.expect(t).to.have.property(\"out_of_date\");",
+									"            pm.expect(t).to.have.property(\"latest_agent_version\");",
+									"            pm.expect(t).to.have.property(\"assess_sensors\");",
+									"            pm.expect(t).to.have.property(\"assess_last_update\");",
+									"            pm.expect(t).to.have.property(\"defend_sensors\");",
+									"            pm.expect(t).to.have.property(\"defense_last_update\");",
+									"            pm.expect(t).to.have.property(\"syslog_enabled\");",
+									"        });",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-key",
+								"type": "text",
+								"value": "{{api_key}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/{{orgUuid}}/applications/{{appId}}/servers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"{{orgUuid}}",
+								"applications",
+								"{{appId}}",
+								"servers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET number of vulnerabilities for all the applications associated to a server",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3ba3561c-e01c-4c14-b541-cf2f1205f696",
+								"exec": [
+									"let jsonData = pm.response.json(); ",
+									"",
+									"pm.test(\"Verify Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify Server Applications and Total Vulnerabilities loaded successfully message\", function () {",
+									"    try{",
+									"        pm.expect(jsonData.success).to.eql(true);",
+									"        pm.expect(jsonData.messages).to.contain(\"Server Applications and Total Vulnerabilities loaded successfully\");",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});",
+									"",
+									"pm.test(\"Verify response Servers contains all properties and valid app_id\", function () {",
+									"    try{",
+									"        jsonData.applications.forEach(function(t){",
+									"            pm.expect(t).to.have.property(\"archived\");",
+									"            pm.expect(t).to.have.property(\"count\");",
+									"            pm.expect(t).to.have.property(\"app_name\");",
+									"            pm.expect(t).to.have.property(\"app_id\");",
+									"        });",
+									"        pm.expect(jsonData.applications[0].app_id).to.eql(pm.environment.get(\"appId\"));",
+									"    }catch(e){",
+									"        console.log(e);",
+									"        throw new Error();",
+									"    }",
+									"    ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "API-key",
+								"type": "text",
+								"value": "{{api_key}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{auth}}"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ng/{{orgUuid}}/servers/{{serverId}}/apptraces",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ng",
+								"{{orgUuid}}",
+								"servers",
+								"{{serverId}}",
+								"apptraces"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
