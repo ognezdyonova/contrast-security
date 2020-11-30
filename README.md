@@ -1,2 +1,3 @@
 # contrast-security
-QA assignment
+
+Please see [Wiki](https://github.com/ognezdyonova/contrast-security/wiki) for details
