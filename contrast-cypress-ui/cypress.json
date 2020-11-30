@@ -1,0 +1,23 @@
+{
+  "viewportWidth": 1920,
+  "viewportHeight": 1080,
+  "chromeWebSecurity": false,
+  "modifyObstructiveCode": false,
+  "pluginsFile": "main-package/plugins/index.js",
+  "supportFile": "main-package/support/index.js",
+  "fixturesFolder": "main-package/tests/constants/scripts.json",
+  "integrationFolder": "main-package/tests/",
+  "videosFolder": "main-package/logs/videos",
+  "screenshotsFolder": "main-package/logs/screenshots",
+  "watchForFileChanges": false,
+  "globals": {
+    "cy": true
+  },
+  "defaultCommandTimeout": 35000,
+  "pageLoadTimeout": 60000,
+  "waitForAnimations": true,
+  "projectId": "zm6yxz",
+  "videoUploadOnPasses": false,
+  "experimentalGetCookiesSameSite": false,
+  "numTestsKeptInMemory": 10
+}
