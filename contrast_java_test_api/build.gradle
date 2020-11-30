@@ -1,0 +1,52 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'org.hamcrest', name: 'hamcrest-core', version: '2.1'
+    testCompile group: 'org.hamcrest', name: 'hamcrest-library', version: '2.1'
+
+    // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5'
+
+    compile "org.apache.httpcomponents:httpmime:4.2.3"
+
+    // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+    compile (group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1') {
+        exclude group: 'org.hamcrest', module: 'hamcrest-core'
+        exclude group: 'org.hamcrest', module: 'hamcrest-library'
+        exclude group: 'junit', module: 'junit'
+    }
+
+    // testCompile group: 'org.testng', name: 'testng', version: '6.14.2'
+    testCompile('org.testng:testng:6.14.2') {
+        exclude group: 'org.hamcrest', module: 'hamcrest-core'
+        exclude group: 'org.hamcrest', module: 'hamcrest-library'
+    }
+
+    // https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin
+    compile group: 'org.apache.maven.plugins', name: 'maven-compiler-plugin', version: '3.8.1'
+
+    // https://mvnrepository.com/artifact/io.rest-assured/rest-assured
+    testCompile( group: 'io.rest-assured', name: 'rest-assured', version: '4.3.1')
+
+    // https://mvnrepository.com/artifact/org.assertj/assertj-core
+    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.17.2'
+
+    // https://mvnrepository.com/artifact/io.rest-assured/json-path
+    compile (group: 'io.rest-assured', name: 'json-path', version: '4.3.1')
+
+    // https://mvnrepository.com/artifact/io.rest-assured/xml-path
+    compile (group: 'io.rest-assured', name: 'xml-path', version: '4.3.1')
+
+    // https://mvnrepository.com/artifact/io.rest-assured/json-schema-validator
+    compile (group: 'io.rest-assured', name: 'json-schema-validator', version: '4.3.1')
+
+}
