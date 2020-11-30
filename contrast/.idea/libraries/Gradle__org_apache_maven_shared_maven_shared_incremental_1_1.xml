@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.apache.maven.shared:maven-shared-incremental:1.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven.shared/maven-shared-incremental/1.1/9d017a7584086755445c0a260dd9a1e9eae161a5/maven-shared-incremental-1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven.shared/maven-shared-incremental/1.1/8631ab3744edacca41a8c9aeb73037773cd33216/maven-shared-incremental-1.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
