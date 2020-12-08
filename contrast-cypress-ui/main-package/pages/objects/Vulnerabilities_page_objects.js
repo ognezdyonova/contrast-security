@@ -15,20 +15,21 @@ class Vulnerabilities_page_objects {
         return cy.get('[data-testid="contrast-grid-row-0"] [data-testid="grid-cell"]');
     }
 
-    filter(tag) {
-        return cy.get('[data-e2e="checkbox-' + tag + '"]')
+    filter_button(){
+        return cy.get('[data-e2e="filter-icon-title_vulnerability"]');
     }
-
-    vul_btn(){
-        return cy.get('[data-e2e="filter-icon-title_vulnerability"]')
+        
+    filter_by(tag) {
+        
+        return cy.get('[data-testid="filters"] li').contains(tag);
     }
         
     title(){
         return cy.get('[data-e2e="grid-header-name"]');
     }
-
-    clear(){
-        return cy.get('[data-e2e="column-header-title_vulnerability"] a')
+        
+    clearLink() {
+        return cy.get('[data-e2e="column-header-title_vulnerability"] a');
     }
 
     add_tag_to_item_button(){
